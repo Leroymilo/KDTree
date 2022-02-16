@@ -4,8 +4,6 @@
 #A lot of things would be nicer if I had the dimension each point divides as an attribute of the Node it's in : no need to pass it down the recursive call.
 #I might change the code to do that some day but I don't really have time for now, just ideas.
 
-#When plotting each search, you might see that sometimes the search using the KD tree doesn't find the same result as the regular search. I don't know why. 
-
 import matplotlib.pyplot as plt
 
 class Point :
@@ -61,7 +59,8 @@ class Scatter :
     
     def closest_kdt(self, coords:tuple[float]) :
         #First call of a recursive function
-        self.kdt.root.clean()
+        if self.kdt.root is not None :
+            self.kdt.root.clean()
         start = self.kdt.root
         closestNode = self.kdt.root
         point = Point(coords, len(coords))

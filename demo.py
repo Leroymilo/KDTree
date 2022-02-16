@@ -1,12 +1,15 @@
 #This is the demonstration of my KD tree "library"
 
+#When plotting each search, you might see that sometimes the search using the KD tree doesn't find the same result as the regular search.
+#I don't know why. I hope it's a case of distance equality.
+
 from KDTree import *
 
 import time as t
 import random as rd
 
 
-test = 1    #Type of test : test multiple times on one scatter with plotting if =0, plots time complexity if =1
+test = 0    #Type of test : test multiple times on one scatter with plotting if =0, plots time complexity if =1
 N = 20      #Number of tests on the scatter (the biggest, the best kdt is, but it's also the number of plots if test == 0 so don't go nuts)
 
 cmin, cmax = -2000, 2000                    #Limits of the coordinates
@@ -22,11 +25,18 @@ if test == 0 :
     timeKDT = 0
 
     #The test are all done on the same scatter plot, but the point it computes is different each loop.
+
+    #Building the scatter with random points :
     s = Scatter("Test scatter")
     plt.figure(s.name)
     for i in range(NbP) :
         s.addPoint(Point((rd.randrange(cmin, cmax), rd.randrange(cmin, cmax))))
+    #Building the KDTree :
+    t0 = t.time()
+    s.buildKDT()
+    timeBuild = t.time()-t0
 
+    #Using the KDTree method on a bunch of points :
     for k in range(N) :
 
         coords = (rd.randrange(cmin, cmax), rd.randrange(cmin, cmax))
